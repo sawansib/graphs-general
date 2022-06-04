@@ -52,9 +52,26 @@ stacked_percentage_stats = [
 
     ("total_ci_per",
      3,
-     ("CI", "CI_CA_SSR:"),
+     ("CA", "CI_CA_SSR:"),
      ("SL", "CI_SL_SSR:"),
      ("NL", "CI_NL_SSR:"),
+     ("Total_instructions_in_deptrace:")),
+
+    ("total_nci_per",
+     3,
+     ("CA", "N_CI_CA_SSR:"),
+     ("SL", "N_CI_SL_SSR:"),
+     ("NL", "N_CI_NL_SSR:"),
+     ("Total_instructions_in_deptrace:")),
+    
+    ("all_fusion_per",
+     6,
+     ("CI-CA", "CI_CA_SSR:"),
+     ("CI-SL", "CI_SL_SSR:"),
+     ("CI-NL", "CI_NL_SSR:"),
+     ("NCI-CA", "N_CI_CA_SSR:"),
+     ("NCI-SL", "N_CI_SL_SSR:"),
+     ("NCI-NL", "N_CI_NL_SSR:"),
      ("Total_instructions_in_deptrace:")),
 ]
 
@@ -86,6 +103,8 @@ if (stat_to_plot == ""):
     raise AttributeError
 
 f_csv = open(csv_path, 'w')
+
+print(stat_to_plot)
 
 
 def read_param(f, p):
@@ -121,6 +140,7 @@ if (graph_type == "normal"):
     for filename in glob.glob(file_to_open):
         application = read_param(filename, "SIMULATION_BENCHMARK:")
         get_value = read_param(filename, stat_to_plot[1])
+        print(get_value)
         f_csv.write(read_param(filename, config_vary))
         f_csv.write(',')
         f_csv.write(application)
@@ -172,13 +192,14 @@ cat_command = "cat " + csv_path + " | sort -k1,1 -t ','" + "\n"
 os.system(cat_command)
 os.system(sort_command)
 
-pdfcrop = "pdfcrop ./pdf/" + stat_to_plot[0] + ".pdf ./pdf/" + stat_to_plot[0] + ".pdf"
+pdfcrop = "pdfcrop ./pdf/" + \
+    stat_to_plot[0] + ".pdf ./pdf/" + stat_to_plot[0] + ".pdf"
 pdfopen = "evince ./pdf/" + stat_to_plot[0] + ".pdf &"
 
 if (graph_type == "normal" or graph_type == "normal_percentage"):
     plot = "./plot/plot-bars.py 0 1 2" + ' "" ' + '"" ' + '"' + y_axis_name + '"' + \
         " " + max + " " + min + " < ./csv/log.csv > pdf/" + \
-        stat_to_plot[0] + ".pdf" + "\n"
+        stat_to_plot[0] + ".pdf && " + pdfcrop + " && " + pdfopen + "\n"
 
 if (graph_type == "stacked" or graph_type == "stacked_percentage"):
     plot = "./plot/plot-bars-stacked.py 0 2 1 3" + ' "" ' + '"" ' + '"' + y_axis_name + '"' + \
@@ -188,4 +209,3 @@ if (graph_type == "stacked" or graph_type == "stacked_percentage"):
 print(plot)
 
 os.system(plot)
-

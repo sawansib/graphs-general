@@ -228,7 +228,7 @@ else:
 #PACT22 Graphs configuration
 frame_y = 45
 frame_x = 100
-y_grid_interval = 0.5
+y_grid_interval = 5
 
 area_size = (mm_to_pt(frame_x), mm_to_pt(frame_y ))
 #legend_x = 20 * ceil(len(stackeds)/legend_rows)
