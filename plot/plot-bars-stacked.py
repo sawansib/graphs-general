@@ -183,7 +183,7 @@ series = [fix_serie(f) for f in sort_series(sorted_list_uniq([r[series_col] for 
 #series = ['BASE_72', 'COOL_52']
 #series = ['BASE_128', 'COOL_64']
 #series = ['BASE', 'COOL']
-series = ['generic', 'generic-fusion', 'macroop-fusion-inorder', 'macroop-fusion-inorder-v2', 'nofusion-o3', 'macroop-fusion-o3']
+#series = ['generic', 'generic-fusion', 'macroop-fusion-inorder', 'macroop-fusion-inorder-v2', 'nofusion-o3', 'macroop-fusion-o3']
 
 #series = ['OwnThreadLQSearch', 'OtherThreadsLQSearch', 'Invalidation&Evictions']
 
@@ -228,6 +228,7 @@ else:
 #PACT22 Graphs configuration
 frame_y = 45
 frame_x = 100
+y_grid_interval = 0.5
 
 area_size = (mm_to_pt(frame_x), mm_to_pt(frame_y ))
 #legend_x = 20 * ceil(len(stackeds)/legend_rows)
